@@ -2,15 +2,16 @@ package ozyegin.myproject.beans.test;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.env.AbstractEnvironment;
 
 import ozyegin.myproject.AppConfig;
 import ozyegin.myproject.beans.GreetingService;
-import ozyegin.myproject.beans.GreetingServiceImpl;
-import ozyegin.myproject.beans.MessageBeanTrImpl;
 
 public class TestGreetingService {
 
 	public static void main(String[] args) {
+		System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "tr");
+
 		ApplicationContext context=new AnnotationConfigApplicationContext(AppConfig.class);
 		GreetingService srv= context.getBean("greetingService", GreetingService.class);
 		System.out.println(srv.getARandomNumber());

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class GreetingServiceImpl implements GreetingService {
 	
 	@Autowired
-	@Qualifier("enMessage")
+	//@Qualifier("enMessage")
 	private MessageBean messageBean;
 	
 	
