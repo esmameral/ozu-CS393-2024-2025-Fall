@@ -1,11 +1,13 @@
 package ozyegin.myproject.beans;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component("message")
-@Profile("en")
+//@Profile("en")
+@Primary
 public class MessageBeanEnImpl implements MessageBean {
 	
 	@Value("${hello.message}")
