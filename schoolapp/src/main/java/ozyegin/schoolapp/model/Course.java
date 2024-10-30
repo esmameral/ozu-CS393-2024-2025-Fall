@@ -3,11 +3,16 @@ package ozyegin.schoolapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -23,10 +28,21 @@ public class Course {
 	
 	@Column(length = 5,name = "COURSE_CODE")
 	private String code;
+	
 	@Column(precision = 3)
 	private int credit;
 	
 	private String roomNumber;
+	
+	@ManyToOne
+	private Instructor instructor;
+	
+	@ManyToMany()
+	@JoinTable(name = "REL_COURSE_STUDENT", 
+	joinColumns = @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID"), 
+	inverseJoinColumns = @JoinColumn(name = "STUDENT_ID", referencedColumnName = "ID"))
+	
+	private List<Student> students=new ArrayList<>();
 	
 	public String getRoomNumber() {
 		return roomNumber;
@@ -36,8 +52,7 @@ public class Course {
 		this.roomNumber = roomNumber;
 	}
 
-	@Transient
-	private List<Student> students=new ArrayList<>();
+
 	
 	public List<Student> getStudents() {
 		return students;

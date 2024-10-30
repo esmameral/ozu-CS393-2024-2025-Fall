@@ -3,44 +3,40 @@ package ozyegin.schoolapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
-public class Student {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+@Table(name="T_STUDENT")
+public class Student extends Person {
 	
-	private String name;
 	private String department;
 
-	@Transient
+	@ManyToMany(mappedBy = "students")
 	private List<Course> courses = new ArrayList<>();
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private Transcript transcript;
+	
+	
+	public Transcript getTranscript() {
+		return transcript;
+	}
+
+	public void setTranscript(Transcript transcript) {
+		this.transcript = transcript;
+	}
 
 	public Student() {
 		super();
 
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 
 	public Student(String name, String department) {
 		super();
@@ -48,11 +44,7 @@ public class Student {
 		this.department = department;
 	}
 
-	public Student(int id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-
+	
 	public List<Course> getCourses() {
 		return courses;
 	}

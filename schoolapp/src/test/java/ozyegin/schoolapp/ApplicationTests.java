@@ -8,14 +8,27 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 
+import jakarta.transaction.Transactional;
 import ozyegin.schoolapp.model.Course;
+import ozyegin.schoolapp.model.Student;
+import ozyegin.schoolapp.model.Transcript;
 import ozyegin.schoolapp.repo.CourseRepository;
+import ozyegin.schoolapp.repo.StudentRepository;
+import ozyegin.schoolapp.repo.TranscriptRepository;
 
 @SpringBootTest
 class ApplicationTests {
 	@Autowired
 	CourseRepository courseRepository;
+	
+	@Autowired
+	StudentRepository studentRepository;
+	
+	
+	@Autowired
+	TranscriptRepository tranRepository;
 
 	@Test
 	void testQueries() {
@@ -52,5 +65,51 @@ class ApplicationTests {
 		assertTrue(course.getId()==1);
 		
 	}
+	
+	@Test
+	void testEntityRelationships() {
+		Course c=new Course("CS393", "Backend Applications 61", 4);
+		c.setRoomNumber("232");
+	
+		
+		Student s1=new Student("Baris1","CS");
+		//s1.setId(111);
+		Student s2=new Student("Sema1","IE");
+		studentRepository.save(s1);
+		studentRepository.save(s2);
+		
+		c.getStudents().add(s1);
+		c.getStudents().add(s2);
+				
+		s1.getCourses().add(c);
+		s2.getCourses().add(c);
+		
 
+		courseRepository.save(c);
+	
+		
+	
+		
+	}
+	
+	
+	
+	@Test
+	void testStudentAndTranscript() {
+		Student s=new Student("Sema","CS");
+		Transcript tran=new Transcript();
+		tran.setGrade(80);
+		//tranRepository.save(tran);
+		s.setTranscript(tran);
+		studentRepository.save(s);
+		
+		
+		
+		
+	}
+	@Test
+	void testCascadeDelete() {
+		
+		studentRepository.deleteById(1402);
+	}
 }
