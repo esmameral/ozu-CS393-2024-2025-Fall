@@ -8,7 +8,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="T_INSTRUCTOR")
+@Table(name="INSTRUCTOR")
 public class Instructor extends Person {
 
 	private String officeNumber;

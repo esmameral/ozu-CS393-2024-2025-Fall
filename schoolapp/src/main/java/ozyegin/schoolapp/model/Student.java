@@ -8,10 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
-@Table(name="T_STUDENT")
+@Table(name="STUDENT")
 public class Student extends Person {
 	
 	private String department;
