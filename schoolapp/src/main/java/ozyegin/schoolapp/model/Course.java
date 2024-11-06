@@ -31,9 +31,18 @@ public class Course {
 	private int credit;
 	
 	private String roomNumber;
-	
 	@ManyToOne
 	private Instructor instructor;
+	
+	public Instructor getInstructor() {
+		return instructor;
+	}
+
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
+
+	
 	
 	@ManyToMany()
 	@JoinTable(name = "REL_COURSE_STUDENT", 

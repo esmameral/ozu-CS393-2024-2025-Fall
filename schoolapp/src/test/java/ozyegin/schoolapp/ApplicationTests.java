@@ -8,11 +8,14 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 
+import jakarta.transaction.Transactional;
 import ozyegin.schoolapp.model.Course;
 import ozyegin.schoolapp.model.Student;
 import ozyegin.schoolapp.model.Transcript;
 import ozyegin.schoolapp.repo.CourseRepository;
+import ozyegin.schoolapp.repo.InstructorRepository;
 import ozyegin.schoolapp.repo.StudentRepository;
 import ozyegin.schoolapp.repo.TranscriptRepository;
 
@@ -27,6 +30,9 @@ class ApplicationTests {
 	
 	@Autowired
 	TranscriptRepository tranRepository;
+	
+	@Autowired
+	InstructorRepository instructorRepository;
 
 	@Test
 	void testQueries() {
@@ -109,5 +115,48 @@ class ApplicationTests {
 	void testCascadeDelete() {
 		
 		studentRepository.deleteById(1402);
+	}
+	
+	@Test
+	void testGetStudentsByName() {
+		List<Student> list=studentRepository.getStudentsNameLike("B");
+		assertTrue(list.size()>0);
+		for (Student student : list) {
+			System.out.println(student.getName());
+		}
+		
+	}
+	@Test
+	void testGetStudentsByCourseAndGrade() {
+		List<Student> list=studentRepository.getAllStudentsInACourseWithAGrade("CS391",80);
+		assertTrue(list.size()>0);
+		for (Student student : list) {
+			System.out.println(student.getName());
+		}
+		
+	}
+	@Test
+	@Transactional
+	@Commit
+	void testUpdateCourse() {
+		courseRepository.updateCourseNameAndRoom("Introduction to OO programming with Java", "410", "CS105");
+		
+	}
+	@Test
+	@Transactional
+	@Commit
+	void testUnassignInstructor() {
+		courseRepository.unassignInstructorFromACourse(2);
+		Course course=courseRepository.findById(2).get();
+		assertTrue(course.getInstructor()==null);
+	}
+	
+	
+	@Test
+	@Transactional
+	@Commit
+	void testDeleteInstructor() {
+		courseRepository.unassignInstructorFromCourses(2);
+		instructorRepository.deleteById(2);
 	}
 }

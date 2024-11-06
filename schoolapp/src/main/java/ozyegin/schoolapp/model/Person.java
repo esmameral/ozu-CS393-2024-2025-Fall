@@ -20,6 +20,10 @@ public abstract class Person {
 		super();
 	}
 	
+	public Person(String name) {
+		super();
+		this.name=name;
+	}
 	
 
 	public int getId() {
