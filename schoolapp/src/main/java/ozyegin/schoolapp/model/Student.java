@@ -3,6 +3,8 @@ package ozyegin.schoolapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -18,7 +20,7 @@ public class Student extends Person {
 	@ManyToMany(mappedBy = "students")
 	private List<Course> courses = new ArrayList<>();
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	private Transcript transcript;
 	
 	

@@ -3,6 +3,8 @@ package ozyegin.schoolapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -15,6 +17,7 @@ public class Instructor extends Person {
 	private String officeNumber;
 	
 	@OneToMany(mappedBy = "instructor")
+	@JsonIgnore
 	private List<Course> courses=new ArrayList<Course>();
 	
 	public String getOfficeNumber() {

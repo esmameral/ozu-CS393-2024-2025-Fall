@@ -14,6 +14,8 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 	
 	public List<Course> findByNameContains(String name);
 	
+	//@Query("select c from Course c where c.code=?1")
+	public Course findByCode(String code);	
 	
 	public List<Course> findByCreditGreaterThan(int credit);
 	
