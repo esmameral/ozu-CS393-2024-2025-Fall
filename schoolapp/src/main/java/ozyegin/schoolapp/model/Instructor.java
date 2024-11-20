@@ -17,7 +17,6 @@ public class Instructor extends Person {
 	private String officeNumber;
 	
 	@OneToMany(mappedBy = "instructor")
-	@JsonIgnore
 	private List<Course> courses=new ArrayList<Course>();
 	
 	public String getOfficeNumber() {

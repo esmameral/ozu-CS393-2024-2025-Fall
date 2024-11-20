@@ -3,12 +3,8 @@ package ozyegin.schoolapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,13 +35,7 @@ public class Course {
 	@ManyToOne
 	private Instructor instructor;
 	
-	public Instructor getInstructor() {
-		return instructor;
-	}
-
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
-	}
+	
 
 	
 	
@@ -53,7 +43,7 @@ public class Course {
 	@JoinTable(name = "REL_COURSE_STUDENT", 
 	joinColumns = @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID"), 
 	inverseJoinColumns = @JoinColumn(name = "STUDENT_ID", referencedColumnName = "ID"))
-	@JsonIgnore
+
 	private List<Student> students=new ArrayList<>();
 	
 	public String getRoomNumber() {
@@ -63,7 +53,13 @@ public class Course {
 	public void setRoomNumber(String roomNumber) {
 		this.roomNumber = roomNumber;
 	}
+	public Instructor getInstructor() {
+		return instructor;
+	}
 
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
 
 	
 	public List<Student> getStudents() {

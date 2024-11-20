@@ -3,6 +3,7 @@ plugins {
 	id 'war'
 	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.diffplug.eclipse.apt' version '3.37.2'
 }
 
 group = 'ozyegin'
@@ -27,6 +28,9 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	runtimeOnly  'org.apache.derby:derbyclient:10.15.2.0'
     runtimeOnly  'org.apache.derby:derbytools:10.15.2.0'
+    implementation 'org.mapstruct:mapstruct:1.6.3'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    
 }
 
 tasks.named('test') {
