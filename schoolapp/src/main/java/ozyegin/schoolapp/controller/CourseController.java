@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import ozyegin.schoolapp.dto.CourseDTO;
-import ozyegin.schoolapp.model.Course;
 import ozyegin.schoolapp.service.CourseService;
 
 @RestController
@@ -25,6 +29,14 @@ public class CourseController {
 	CourseService courseService;
 	
 	
+	@Operation(	summary = "Find course by courseCode", 
+			description = "Returns a single course info" 
+			)
+	@ApiResponses(value = {
+	    @ApiResponse(responseCode = "201", description = "successful operation",
+	            content = @Content(schema = @Schema(implementation = CourseDTO.class)))
+	    }
+	)
 	@RequestMapping(value="/{code}", method = RequestMethod.GET)
 	public ResponseEntity<CourseDTO> getCourse(@PathVariable("code") String courseCode) {
 		CourseDTO newCourse=courseService.getCourse(courseCode);
@@ -38,6 +50,8 @@ public class CourseController {
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
+	@Operation(summary = "Creates a new course", 
+		description = "Save new course's info into database")
 	public CourseDTO saveCourse(@RequestBody CourseDTO courseDTO) {
 		return courseService.saveCourse(courseDTO);
 	}
