@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Management Application</title>
+    <script type="text/javascript" src="./js/functions.js"></script>
+
 </head>
 
 <body>
     <h1>Menu Items</h1>
     <ul>
         <li> <a href="newcourse.html">Create a new Course</a></li>
-        <li><a href="">List Courses</a></li>
-        <li><a href="">List Instructors</a></li>
+        <li><h2 onclick="displayCourseList()">List Courses</h2></li>
+        <div id="courses">current course list</div>
+        <li><h2 onclick="displayInstructors()">List Instructors</h2></li>
+        <div id="instructors">Instructor list</div>
     </ul>
 </body>
 
