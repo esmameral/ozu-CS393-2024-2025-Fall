@@ -1,55 +1,12 @@
 function displayCourseList() {
-    var courses = [
-        {
-            "name": "OO programming with Java",
-            "code": "CS105",
-            "credit": 6,
-            "officeNumber": null
-        },
-        {
-            "name": "Frontend Applications",
-            "code": "CS391",
-            "credit": 4,
-            "officeNumber": null
-        },
-        {
-            "name": "Backend Applications",
-            "code": "CS393",
-            "credit": 4,
-            "officeNumber": null
-        },
-        {
-            "name": "OO programming with Java",
-            "code": "CS106",
-            "credit": 6,
-            "officeNumber": null
-        },
-        {
-            "name": "Data Structures",
-            "code": "CS201",
-            "credit": 6,
-            "officeNumber": "231"
-        },
-        {
-            "name": "Introduction to programming",
-            "code": "CS101",
-            "credit": 6,
-            "officeNumber": "401"
-        },
-        {
-            "name": "Introduction to programming",
-            "code": "CS101",
-            "credit": 6,
-            "officeNumber": "401"
-        },
-        {
-            "name": "amnsabdvsab sadnbamnsda",
-            "code": "CS111",
-            "credit": 6,
-            "officeNumber": "242"
-        }
-    ];
+    fetch('http://localhost:8080/courses')
+    .then(response=>response.json())
+    .then(data=>printCourses(data))
+    .catch(e=>console.log(e));
 
+}
+
+function printCourses(courses){
     var table = "<table>";
     for (i = 0; i < courses.length; i++) {
         table += "<tr>"
@@ -60,30 +17,47 @@ function displayCourseList() {
         table += "</tr>"
     }
     table += "</table>";
-
-
-
-
     document.getElementById("courses").innerHTML = table;
 }
+function displayInstructors() {
+    fetch('http://localhost:8080/instructors')
+    .then(res => res.json())
+    .then(data=>printInstructors(data));  
+}  
 
- var list=[
-    {
-      "name": "Hasan",
-      "id": 52
-    },
-    {
-      "name": "Fatih",
-      "id": 53
-    }
-  ];
-  
-
+function printInstructors(list){
     var text = "";
     for (instructor of list) {
-        text+=instructor.name ;
-        text+="<br>"
-        
+        text += instructor.id+" ";
+        text += instructor.name;
+        text += "<br>"
+
     }
     document.getElementById("instructors").innerHTML = text;
-}  
+}
+
+function createNewCourse(){
+ var courseCode=document.getElementById("courseCode").value;
+ var courseName=document.getElementById("courseName").value;
+ var credit=document.getElementById("credit").value;
+ var roomNumber=document.getElementById("room").value;
+ var course={
+        "name": courseName,
+        "code": courseCode,
+        "credit": credit,
+        "officeNumber": roomNumber
+ }
+
+ var options ={
+    method: 'POST',
+     body: JSON.stringify(course),
+        headers: new Headers({
+        'Content-Type': 'application/json'
+        })
+    }
+        
+
+ fetch('http://localhost:8080/courses',options)
+ .then(()=>alert("course saved successfully"));
+return false;
+}
